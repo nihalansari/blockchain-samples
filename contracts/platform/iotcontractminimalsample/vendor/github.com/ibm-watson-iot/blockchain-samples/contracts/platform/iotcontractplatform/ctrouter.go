@@ -136,7 +136,7 @@ func Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([
 	var r ChaincodeRoute
 	r, found := router[function]
 	if !found {
-		err := fmt.Errorf("Invoke did not find registered invoke function %s", function)
+		err := fmt.Errorf("$NIHAL$Invoke did not find registered invoke function %s", function)
 		log.Error(err)
 		setStubEvent(stub, err, nil)
 		return nil, err
