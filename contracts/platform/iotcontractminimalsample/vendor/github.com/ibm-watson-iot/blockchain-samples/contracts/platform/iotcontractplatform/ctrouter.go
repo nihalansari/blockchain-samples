@@ -345,7 +345,7 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 										resp.AfDmaTest = ""
 										resp.DmaDelCert = ""
 										//inreq.DmaPass = "" field does not exist on UI
-										resp.DmaPass = ""
+										//resp.DmaPass = ""
 										resp.AfDoc = ""
 
 				} else if caller == "Transporter" {
@@ -353,7 +353,7 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 													resp.MatnrAf = ""
 													//inreq.MatnrDma = "" field does not exist on UI
 													resp.PoDma = ""
-													resp.poSupp = ""
+													resp.PoSupp = ""
 													resp.DmaDelDate = ""
 													resp.AfDelDate = ""
 													resp.TruckMod = ""
@@ -368,10 +368,11 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 													resp.AfDmaTest = ""
 													resp.DmaDelCert = ""
 													//inreq.DmaPass = "" field does not exist on UI
-													resp.DmaPass = ""
+													//resp.DmaPass = ""
 													resp.AfDoc = ""
 
 				}
-
-	return resp, nil
+	//populate respFull with the update values
+	respFull.AssetState.Asset = resp
+	return respFull, nil
 }
