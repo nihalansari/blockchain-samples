@@ -323,7 +323,7 @@ func init() {
 // each caller have a limited number of fields that it can see
 func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct, error) {
 	
-	resp=respFull.AssetState.Asset
+	resp := respFull.AssetState.Asset
 	if caller == "AF" {
 					resp.MatnrAf = ""
 					resp.PoSupp = ""
