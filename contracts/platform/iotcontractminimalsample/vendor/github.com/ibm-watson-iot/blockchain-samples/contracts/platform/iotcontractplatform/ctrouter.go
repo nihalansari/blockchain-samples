@@ -180,9 +180,9 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 		return nil, err
 	}
 	
-	err := fmt.Errorf("Response: %s", result)
-	log.Error(err)
-	return result, err
+	err1 := fmt.Errorf("Response: %s", result)
+	log.Error(err1)
+	return result, err1
 	//return result, nil
 }
 
