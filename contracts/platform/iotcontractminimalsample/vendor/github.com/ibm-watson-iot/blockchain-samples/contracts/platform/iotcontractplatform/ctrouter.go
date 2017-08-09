@@ -278,15 +278,14 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 	}
 	
 	var respObj ResponseStruct
-	err2 := json.Unmarshal([]byte(result), &respObj)
-	if err2 != nil {
+	err5 := json.Unmarshal([]byte(result), &respObj)
+	if err5 != nil {
 		fmt.Println("$NIHAL$ error while unmarshalling response structure:", err2)
 	}
 	
-	
 	//Now from the response object filter out the restricted fields
 	//restriction will depend on the caller
-	filteredResp,err3 := filterQueryResponse(respObj,inreq.Payload.Caller)
+	filteredResp, err3 := filterQueryResponse(respObj,inreq.Payload.Caller)
 	
 	//Now marshal filteredResp so that it can be sent back as string
 	resbytes, err4 := json.Marshal(filteredResp) 
@@ -322,56 +321,57 @@ func init() {
 // This function is called to filter out fields from the response
 // based on the value of caller. 
 // each caller have a limited number of fields that it can see
-func filterQueryResponse(inreq InRequest, caller string) (InRequest, error) {
+func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct, error) {
 	
+	resp=respFull.AssetState.Asset
 	if caller == "AF" {
-					inreq.MatnrAf = ""
-					inreq.PoSupp = ""
-					inreq.DmaDelDate = ""
-					inreq.SuppTest = ""
-					inreq.GrDma = ""
+					resp.MatnrAf = ""
+					resp.PoSupp = ""
+					resp.DmaDelDate = ""
+					resp.SuppTest = ""
+					resp.GrDma = ""
 
 		} else if caller  == "DMA" {
 								//DMA has authority to see al fields
 								_ = ""
 			} else if caller == "Supplier" {
-										inreq.MatnrAf = ""
-										inreq.PoDma = ""
-										inreq.AfDelDate = ""
-										inreq.GrDma = ""
-										inreq.GrAf = ""
+										resp.MatnrAf = ""
+										resp.PoDma = ""
+										resp.AfDelDate = ""
+										resp.GrDma = ""
+										resp.GrAf = ""
 										//inreq.DmaModif = "" field does not exist on UI
-										inreq.DmaMasdat = ""
-										inreq.AfDmaTest = ""
-										inreq.DmaDelCert = ""
+										resp.DmaMasdat = ""
+										resp.AfDmaTest = ""
+										resp.DmaDelCert = ""
 										//inreq.DmaPass = "" field does not exist on UI
-										inreq.DmaPass = ""
-										inreq.AfDoc = ""
+										resp.DmaPass = ""
+										resp.AfDoc = ""
 
 				} else if caller == "Transporter" {
 
-													inreq.MatnrAf = ""
+													resp.MatnrAf = ""
 													//inreq.MatnrDma = "" field does not exist on UI
-													inreq.PoDma = ""
-													inreq.poSupp = ""
-													inreq.DmaDelDate = ""
-													inreq.AfDelDate = ""
-													inreq.TruckMod = ""
-													inreq.TruckPDate = ""
-													inreq.TruckChnum = ""
-													inreq.TruckEnnum = ""
-													inreq.SuppTest = ""
-													inreq.GrDma = ""
-													inreq.GrAf = ""
+													resp.PoDma = ""
+													resp.poSupp = ""
+													resp.DmaDelDate = ""
+													resp.AfDelDate = ""
+													resp.TruckMod = ""
+													resp.TruckPDate = ""
+													resp.TruckChnum = ""
+													resp.TruckEnnum = ""
+													resp.SuppTest = ""
+													resp.GrDma = ""
+													resp.GrAf = ""
 													//inreq.DmaModif = "" field does not exist on UI
-													inreq.DmaMasdat = ""
-													inreq.AfDmaTest = ""
-													inreq.DmaDelCert = ""
+													resp.DmaMasdat = ""
+													resp.AfDmaTest = ""
+													resp.DmaDelCert = ""
 													//inreq.DmaPass = "" field does not exist on UI
-													inreq.DmaPass = ""
-													inreq.AfDoc = ""
+													resp.DmaPass = ""
+													resp.AfDoc = ""
 
 				}
 
-	return inreq, nil
+	return resp, nil
 }
