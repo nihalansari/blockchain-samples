@@ -39,6 +39,64 @@ type SimpleChaincode struct{}
 // ChaincodeFunc is the signature for all functions that eminate from deploy, invoke or query messages to the contract
 type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte, error)
 
+
+// Structure to parse response JSON BEGIN
+type InRequest struct {
+
+		Assetclass struct {
+				name 	string	`json:"name"`
+				prefix 	string	`json:"prefix"`
+				assetIDpath 	string	`json:"assetIDpath"`	
+		}
+
+		AssetKey string `json:"assetkey"`
+
+		AssetState struct {
+							Asset struct {	
+							
+							TransactionType 	string	`json:"transactionType"`
+							OwnerId				string	`json:"ownerId"`
+							AssetId				string	`json:"assetID"`		//BLOCKCHAIN KEY
+																				//NOTE: assetId changed to assetID 
+							MatnrAf				string	`json:"matnrAf"`
+							PoDma				string	`json:"poDma"`
+							PoSupp				string	`json:"poSupp"`
+							DmaDelDate			string	`json:"dmaDelDate"`
+							AfDelDate			string	`json:"afDelDate"`
+							TruckMod			string	`json:"truckMod"`
+							TruckPDate			string	`json:"truckPdate"`
+							TruckChnum			string	`json:"truckChnum"`
+							TruckEnnum			string	`json:"truckEnnum"`
+							SuppTest			string	`json:"suppTest"`
+							GrDma				string	`json:"grDma"`
+							GrAf				string	`json:"grAf"`
+							DmaMasdat			string	`json:"dmaMasdat"`
+							AfDmaTest			string	`json:"afDmaTest"`
+							DmaDelCert			string	`json:"dmaDelCert"`
+							AfDoc				string	`json:"afDoc"`
+							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
+							V5cid           string `json:"v5cID"`
+										} 
+							}
+		EventPayload struct {
+
+					Asset struct { 
+								AssetId		string	`json:"assetID"` 
+								}
+					eventFunction 	string	`json:"eventfunction"`
+					txnId 	string	`json:"txnid"`
+					txnTs 	string	`json:"txnts"`
+		}
+		EventOut struct		{
+			name 	string	`json:"name"`
+			payload struct { }
+			compliant string `json:"compliant"`
+		}
+
+}
+
+//END
+
 var router = make(map[string]ChaincodeRoute, 0)
 
 // AddRoute allows a class definition to register its payload API, one route at a time
@@ -180,7 +238,14 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 		return nil, err
 	}
 	
-	err1 := fmt.Errorf("Response: %s", result)
+	var inreq InRequest
+	err2 := json.Unmarshal([]byte(result), &inreq)
+	if err2 != nil {
+		fmt.Println("$NIHAL$ error while unmarshalling response structure:", err2)
+	}
+	
+	
+	err1 := fmt.Errorf("Response: %s", inreq.AssetState.Asset.AssetId)
 	log.Error(err1)
 	return result, err1
 	//return result, nil
