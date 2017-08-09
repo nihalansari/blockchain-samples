@@ -179,7 +179,11 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 		log.Error(err)
 		return nil, err
 	}
-	return result, nil
+	
+	err := fmt.Errorf("Response: %s", result)
+	log.Error(err)
+	return result, err
+	//return result, nil
 }
 
 // readAllRoutes shows all registered routes
