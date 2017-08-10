@@ -260,7 +260,7 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 	if err2 != nil {
 		fmt.Println("Payload Unmarshal Error in Query error:", err2)
 	}
-	fmt.Println("$NIHAL$ Inside Query The caller is recorded as:", inreq.Payload.Caller)
+	fmt.Println("$NIHAL$ Inside Query The caller is recorded as:", inreq.Asset.Caller)
 	
 	//Now call the requested method and get response data
 	var r ChaincodeRoute
@@ -285,7 +285,7 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 	
 	//Now from the response object filter out the restricted fields
 	//restriction will depend on the caller
-	filteredResp, err3 := filterQueryResponse(respObj,inreq.Payload.Caller)
+	filteredResp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
 	if err3 != nil { 
 		err3 := fmt.Errorf("filterQueryResponse returned Error")
 		log.Error(err3)
