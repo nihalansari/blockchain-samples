@@ -381,7 +381,31 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 													//resp.DmaPass = ""
 													resp.AfDoc = ""
 
-				}
+					} else {
+							//Any other caller apart from the above 4
+							//Hide all the fields
+							resp.TransactionType = ""
+							resp.OwnerId		= ""
+							resp.MatnrAf		= ""
+							resp.PoDma		= ""
+							resp.PoSupp		= ""
+							resp.DmaDelDate		= ""
+							resp.AfDelDate		= ""
+							resp.TruckMod		= ""
+							resp.TruckPDate		= ""
+							resp.TruckChnum		= ""
+							resp.TruckEnnum		= ""
+							resp.SuppTest		= ""
+							resp.GrDma		= ""
+							resp.GrAf		= ""
+							resp.DmaMasdat		= ""
+							resp.AfDmaTest		= ""
+							resp.DmaDelCert		= ""
+							resp.AfDoc		= ""
+							resp.Caller = ""
+							resp.V5cid           	= ""
+							
+						}
 	//populate respFull with the update values
 	respFull.AssetState.Asset = resp
 	return respFull, nil
