@@ -99,7 +99,7 @@ type ResponseStruct struct {
 
 //body of Input POST request
 type InRequest struct {
-		Payload struct {	
+		Asset struct {	
 		
 		TransactionType 	string	`json:"transactionType"`
 		OwnerId				string	`json:"ownerId"`
