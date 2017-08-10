@@ -340,10 +340,14 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 					resp.DmaDelDate = ""
 					resp.SuppTest = ""
 					resp.GrDma = ""
+					//empty document field		
+					resp.DmaCert.Cert = ""
 
 		} else if caller  == "DMA" {
 								//DMA has authority to see al fields
 								_ = ""
+								//empty document field		
+								resp.DmaCert.Cert = ""
 			} else if caller == "Supplier" {
 										resp.MatnrAf = ""
 										resp.PoDma = ""
@@ -353,7 +357,8 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 										//inreq.DmaModif = "" field does not exist on UI
 										resp.DmaMasdat = ""
 										resp.AfDmaTest = ""
-										resp.DmaDelCert = ""
+										//empty document field		
+										resp.DmaCert.Cert = ""
 										//inreq.DmaPass = "" field does not exist on UI
 										//resp.DmaPass = ""
 										resp.AfDoc = ""
@@ -376,7 +381,8 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 													//inreq.DmaModif = "" field does not exist on UI
 													resp.DmaMasdat = ""
 													resp.AfDmaTest = ""
-													resp.DmaDelCert = ""
+											//empty document field		
+											resp.DmaCert.Cert = ""
 													//inreq.DmaPass = "" field does not exist on UI
 													//resp.DmaPass = ""
 													resp.AfDoc = ""
@@ -404,6 +410,8 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 							resp.AfDoc		= ""
 							resp.Caller = ""
 							resp.V5cid           	= ""
+							//empty document field		
+							resp.DmaCert.Cert = ""
 							
 						}
 	//populate respFull with the update values
