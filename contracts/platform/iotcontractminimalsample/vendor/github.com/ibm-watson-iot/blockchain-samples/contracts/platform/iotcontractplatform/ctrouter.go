@@ -72,7 +72,7 @@ type ResponseStruct struct {
 							GrAf				string	`json:"grAf"`
 							DmaMasdat			string	`json:"dmaMasdat"`
 							AfDmaTest			string	`json:"afDmaTest"`
-							DmaCert			{ Cert string	`json:"cert"` }
+							DmaCert		struct	{ Cert string	`json:"cert"` }
 							AfDoc				string	`json:"afDoc"`
 							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
 							V5cid           string `json:"v5cID"`
