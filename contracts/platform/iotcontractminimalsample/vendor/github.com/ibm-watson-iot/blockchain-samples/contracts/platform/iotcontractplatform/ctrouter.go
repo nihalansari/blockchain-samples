@@ -52,7 +52,7 @@ type ResponseStruct struct {
 		AssetKey string `json:"assetkey"`
 
 		AssetState struct {
-							Asset []struct {	
+							Asset struct {	
 							
 							TransactionType 	string	`json:"transactionType"`
 							OwnerId				string	`json:"ownerId"`
@@ -277,30 +277,43 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 		return nil, err
 	}
 	
-	var respObj ResponseStruct
-	err5 := json.Unmarshal([]byte(result), &respObj)
-	if err5 != nil {
-		fmt.Println("$NIHAL$ error while unmarshalling response structure:", err2)
-	}
+	if function == "readAsset" {
+		var respObj ResponseStruct
+		err5 := json.Unmarshal([]byte(result), &respObj)
+		if err5 != nil {
+			fmt.Println("$NIHAL$ error while unmarshalling response structure:", err2)
+		}
+
+		//Now from the response object filter out the restricted fields
+		//restriction will depend on the caller
+		filteredResp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
+		if err3 != nil { 
+			err3 := fmt.Errorf("filterQueryResponse returned Error")
+			log.Error(err3)
+			return nil, err3
+		}
+
+		//Now marshal filteredResp so that it can be sent back as string
+		resbytes, err4 := json.Marshal(filteredResp) 
+		if err4 != nil { 
+			err4 := fmt.Errorf("Marshal ERROR just before sending back response in method Query")
+			log.Error(err4)
+			return nil, err4
+		}
+
+		return resbytes, nil
+	} else if function == "readAllAssets" {
 	
-	//Now from the response object filter out the restricted fields
-	//restriction will depend on the caller
-	filteredResp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
-	if err3 != nil { 
-		err3 := fmt.Errorf("filterQueryResponse returned Error")
-		log.Error(err3)
-		return nil, err3
-	}
+		if inreq.Asset.Caller != "DMA" {
+			err4 := fmt.Errorf("readAllAssets can only be called by caller=DMA")
+			log.Error(err4)
+			return nil, err4
+		} else { 
+			//return the whole array of Assets as DMA has called this query method
+			return result, nil 
+		}
+	} 
 	
-	//Now marshal filteredResp so that it can be sent back as string
-	resbytes, err4 := json.Marshal(filteredResp) 
-	if err4 != nil { 
-		err4 := fmt.Errorf("Marshal ERROR just before sending back response in method Query")
-		log.Error(err4)
-		return nil, err4
-	}
-	
-	return resbytes, nil
 	
 }
 
@@ -334,7 +347,7 @@ func init() {
 func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct, error) {
 	
 	//resp := respFull.AssetState.Asset
-	resp := respFull.AssetState.Asset[0]
+	resp := respFull.AssetState.Asset
 	if caller == "AF" {
 					resp.MatnrAf = ""
 					resp.PoSupp = ""
@@ -416,6 +429,6 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 							
 						}
 	//populate respFull with the update values
-	respFull.AssetState.Asset[0] = resp
+	respFull.AssetState.Asset = resp
 	return respFull, nil
 }
