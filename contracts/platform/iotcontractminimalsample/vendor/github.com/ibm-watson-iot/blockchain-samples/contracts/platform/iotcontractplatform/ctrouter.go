@@ -314,7 +314,7 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 		}
 	} 
 	
-	
+	return nil,nil
 }
 
 // readAllRoutes shows all registered routes
