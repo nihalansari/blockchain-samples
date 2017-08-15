@@ -416,6 +416,6 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 							
 						}
 	//populate respFull with the update values
-	respFull.AssetState.Asset = resp
+	respFull.AssetState.Asset[0] = resp
 	return respFull, nil
 }
