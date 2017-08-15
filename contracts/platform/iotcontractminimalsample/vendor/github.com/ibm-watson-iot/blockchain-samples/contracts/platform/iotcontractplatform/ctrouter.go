@@ -407,7 +407,7 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 							resp.GrAf		= ""
 							resp.DmaMasdat		= ""
 							resp.AfDmaTest		= ""
-							resp.DmaDelCert		= ""
+							//resp.DmaDelCert		= ""
 							resp.AfDoc		= ""
 							resp.Caller = ""
 							resp.V5cid           	= ""
