@@ -52,9 +52,7 @@ type ResponseStruct struct {
 		AssetKey string `json:"assetkey"`
 
 		AssetState struct {
-//							Asset struct {	
-
-			Asset []struct {	
+							Asset struct {	
 							
 							TransactionType 	string	`json:"transactionType"`
 							OwnerId				string	`json:"ownerId"`
@@ -335,8 +333,8 @@ func init() {
 // each caller have a limited number of fields that it can see
 func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct, error) {
 	
-	//resp := respFull.AssetState.Asset
-	resp := respFull.AssetState.Asset[0]
+	resp := respFull.AssetState.Asset
+	//resp := respFull.AssetState.Asset[0]
 	if caller == "AF" {
 					resp.MatnrAf = ""
 					resp.PoSupp = ""
