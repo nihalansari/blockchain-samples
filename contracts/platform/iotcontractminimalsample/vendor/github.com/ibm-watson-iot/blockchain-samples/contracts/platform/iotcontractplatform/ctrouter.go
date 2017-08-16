@@ -43,7 +43,7 @@ type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte
 
 // Structure to parse response JSON BEGIN
 
-/ Asset is a type that holds all information about an asset, including its name,
+// Asset is a type that holds all information about an asset, including its name,
 // its world state prefix, and the qualified property name that is its assetID
 type ResponseStruct struct {
 	Class        AssetClass              `json:"assetclass"`         // asset's classifier with metadata
