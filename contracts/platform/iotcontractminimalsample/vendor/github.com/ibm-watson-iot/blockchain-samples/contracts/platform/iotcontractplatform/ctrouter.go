@@ -48,7 +48,36 @@ type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte
 type ResponseStruct struct {
 	Class        AssetClass              `json:"assetclass"`         // asset's classifier with metadata
 	AssetKey     string                  `json:"assetkey"`           // asset's world state key
-	State        *map[string]interface{} `json:"assetstate"`         // asset's current state
+	//State        *map[string]interface{} `json:"assetstate"`         // asset's current state
+// AssetState NEW BEGIN
+	AssetState struct {
+					Asset struct {	
+							
+							TransactionType 	string	`json:"transactionType"`
+							OwnerId				string	`json:"ownerId"`
+							AssetId				string	`json:"assetID"`		//BLOCKCHAIN KEY
+																				//NOTE: assetId changed to assetID 
+							MatnrAf				string	`json:"matnrAf"`
+							PoDma				string	`json:"poDma"`
+							PoSupp				string	`json:"poSupp"`
+							DmaDelDate			string	`json:"dmaDelDate"`
+							AfDelDate			string	`json:"afDelDate"`
+							TruckMod			string	`json:"truckMod"`
+							TruckPDate			string	`json:"truckPdate"`
+							TruckChnum			string	`json:"truckChnum"`
+							TruckEnnum			string	`json:"truckEnnum"`
+							SuppTest			string	`json:"suppTest"`
+							GrDma				string	`json:"grDma"`
+							GrAf				string	`json:"grAf"`
+							DmaMasdat			string	`json:"dmaMasdat"`
+							AfDmaTest			string	`json:"afDmaTest"`
+							DmaCert		struct	{ Cert string	`json:"cert"` }
+							AfDoc				string	`json:"afDoc"`
+							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
+							
+										} 
+					}
+// AssetState NEW END
 	EventIn      *map[string]interface{} `json:"eventpayload"`       // most recent event body
 	FunctionIn   string                  `json:"eventfunction"`      // most recent event function
 	TXNID        string                  `json:"txnid"`              // transaction UUID matching blockchain
