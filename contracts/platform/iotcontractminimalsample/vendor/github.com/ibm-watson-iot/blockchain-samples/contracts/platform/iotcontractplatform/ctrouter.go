@@ -400,11 +400,10 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 
 		//Now from the response object filter out the restricted fields
 		//restriction will depend on the caller
-		var temp tempAsset
 		
 		//loop for each row in the array
 		for idx := 0; idx < len(respObjArr); idx++ {
-		
+			var temp tempAsset
 			//filteredResp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
 			temp, err3 := filterQueryResponse(respObjArr[idx],inreq.Asset.Caller)
 			if err3 != nil { 
