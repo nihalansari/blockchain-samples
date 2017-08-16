@@ -88,7 +88,7 @@ type ResponseStruct struct {
 }
 
 // AssetArray is an array of assets, used by read all, recent states, history, etc.
-type AssetArray []Asset
+//type AssetArray []Asset
 
 type ResponseStruct_OLD struct {
 
