@@ -40,6 +40,33 @@ type SimpleChaincode struct{}
 type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte, error)
 
 
+type tempAsset Struct
+
+							
+							TransactionType 	string	`json:"transactionType"`
+							OwnerId				string	`json:"ownerId"`
+							AssetId				string	`json:"assetID"`		//BLOCKCHAIN KEY
+																				//NOTE: assetId changed to assetID 
+							MatnrAf				string	`json:"matnrAf"`
+							PoDma				string	`json:"poDma"`
+							PoSupp				string	`json:"poSupp"`
+							DmaDelDate			string	`json:"dmaDelDate"`
+							AfDelDate			string	`json:"afDelDate"`
+							TruckMod			string	`json:"truckMod"`
+							TruckPDate			string	`json:"truckPdate"`
+							TruckChnum			string	`json:"truckChnum"`
+							TruckEnnum			string	`json:"truckEnnum"`
+							SuppTest			string	`json:"suppTest"`
+							GrDma				string	`json:"grDma"`
+							GrAf				string	`json:"grAf"`
+							DmaMasdat			string	`json:"dmaMasdat"`
+							AfDmaTest			string	`json:"afDmaTest"`
+							DmaCert		struct	{ Cert string	`json:"cert"` }
+							AfDoc				string	`json:"afDoc"`
+							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
+							V5cid           string `json:"v5cID"`
+										}
+
 // Structure to parse response JSON BEGIN
 type ResponseStruct struct {
 
@@ -289,15 +316,20 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 
 		//Now from the response object filter out the restricted fields
 		//restriction will depend on the caller
-		filteredResp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
+		var temp tempAsset
+		//filteredResp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
+		temp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
 		if err3 != nil { 
 			err3 := fmt.Errorf("filterQueryResponse returned Error")
 			log.Error(err3)
 			return nil, err3
 		}
-
+		//now overwrite the response object with filtered asset data
+		respObj.AssetState.Asset = temp
+		
 		//Now marshal filteredResp so that it can be sent back as string
-		resbytes, err4 := json.Marshal(filteredResp) 
+		//resbytes, err4 := json.Marshal(filteredResp) 
+		resbytes, err4 := json.Marshal(respObj) 
 		if err4 != nil { 
 			err4 := fmt.Errorf("Marshal ERROR just before sending back response in method Query")
 			log.Error(err4)
@@ -347,8 +379,8 @@ func init() {
 // This function is called to filter out fields from the response
 // based on the value of caller. 
 // each caller have a limited number of fields that it can see
-func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct, error) {
-	
+func filterQueryResponse(respFull ResponseStruct, caller string) (tempAsset, error) {
+	var resp tempAsset
 	//resp := respFull.AssetState.Asset
 	resp := respFull.AssetState.Asset
 	if caller == "AF" {
@@ -432,6 +464,7 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (ResponseStruct
 							
 						}
 	//populate respFull with the update values
-	respFull.AssetState.Asset = resp
-	return respFull, nil
+	//respFull.AssetState.Asset = resp
+	//return respFull, nil
+	return resp, nil
 }
