@@ -277,6 +277,9 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 		return nil, err
 	}
 	
+	//temp- to be removed
+	return result,nil
+	
 	if function == "readAsset" {
 		var respObj ResponseStruct
 		err5 := json.Unmarshal([]byte(result), &respObj)
