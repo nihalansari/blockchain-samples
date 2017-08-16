@@ -40,7 +40,7 @@ type SimpleChaincode struct{}
 type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte, error)
 
 
-type tempAsset Struct {
+type tempAsset struct {
 
 							
 							TransactionType 	string	`json:"transactionType"`
@@ -65,7 +65,7 @@ type tempAsset Struct {
 							AfDoc				string	`json:"afDoc"`
 							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
 							
-										}
+			}
 
 // Structure to parse response JSON BEGIN
 type ResponseStruct struct {
