@@ -305,7 +305,7 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 	}
 	
 	//temp- to be removed
-	return result,nil
+	//return result,nil
 	
 	if function == "readAsset" {
 		var respObj ResponseStruct
