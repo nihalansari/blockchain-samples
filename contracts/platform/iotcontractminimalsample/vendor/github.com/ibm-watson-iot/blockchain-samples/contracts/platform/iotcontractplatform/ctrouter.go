@@ -87,6 +87,9 @@ type ResponseStruct struct {
 	Compliant    bool                    `json:"compliant"`          // true if the asset complies with the contract terms
 }
 
+// AssetArray is an array of assets, used by read all, recent states, history, etc.
+type AssetArray []Asset
+
 type ResponseStruct_OLD struct {
 
 		Assetclass struct {
@@ -388,15 +391,50 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 
 		return resbytes, nil
 	} else if function == "readAllAssets" {
-	
-		if inreq.Asset.Caller != "DMA" {
+		var respObjArr AssetArray
+		//now unmarshal the ARRAY of assets **NOTE**
+		err5 := json.Unmarshal([]byte(result), &respObjArr)
+		if err5 != nil {
+			fmt.Println("$NIHAL$ error while unmarshalling response structure:", err2)
+		}
+
+		//Now from the response object filter out the restricted fields
+		//restriction will depend on the caller
+		var temp tempAsset
+		
+		//loop for each row in the array
+		for idx := 0; idx < len(respObjArr); idx++ {
+		
+			//filteredResp, err3 := filterQueryResponse(respObj,inreq.Asset.Caller)
+			temp, err3 := filterQueryResponse(respObjArr[idx],inreq.Asset.Caller)
+			if err3 != nil { 
+				err3 := fmt.Errorf("filterQueryResponse returned Error")
+				log.Error(err3)
+				return nil, err3
+			}
+			//now write back the updated values to response Nth row
+			respObjArr[idx].AssetState.Asset = temp
+		}
+		
+		//Now marshal filtered response array so that it can be sent back as string
+		//resbytes, err4 := json.Marshal(filteredResp) 
+		resbytes, err4 := json.Marshal(respObjArr) 
+		if err4 != nil { 
+			err4 := fmt.Errorf("Marshal ERROR just before sending back response in method Query")
+			log.Error(err4)
+			return nil, err4
+		}
+		return resbytes, nil
+		/*if inreq.Asset.Caller != "DMA" {
 			err4 := fmt.Errorf("readAllAssets can only be called by caller=DMA")
 			log.Error(err4)
 			return nil, err4
 		} else { 
+			
+			
 			//return the whole array of Assets as DMA has called this query method
 			return result, nil 
-		}
+		}*/
 	} 
 	
 	return nil,nil
