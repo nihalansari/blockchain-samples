@@ -42,7 +42,23 @@ type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte
 
 
 // Structure to parse response JSON BEGIN
+
+/ Asset is a type that holds all information about an asset, including its name,
+// its world state prefix, and the qualified property name that is its assetID
 type ResponseStruct struct {
+	Class        AssetClass              `json:"assetclass"`         // asset's classifier with metadata
+	AssetKey     string                  `json:"assetkey"`           // asset's world state key
+	State        *map[string]interface{} `json:"assetstate"`         // asset's current state
+	EventIn      *map[string]interface{} `json:"eventpayload"`       // most recent event body
+	FunctionIn   string                  `json:"eventfunction"`      // most recent event function
+	TXNID        string                  `json:"txnid"`              // transaction UUID matching blockchain
+	TXNTS        *time.Time              `json:"txnts,omitempty"`    // transaction timestamp matching blockchain
+	EventOut     *InvokeResultEvent      `json:"eventout,omitempty"` // event emitted upon exit from an invoke
+	AlertsActive AlertNameArray          `json:"alerts,omitempty"`   // array of active alerts
+	Compliant    bool                    `json:"compliant"`          // true if the asset complies with the contract terms
+}
+
+type ResponseStruct_OLD struct {
 
 		Assetclass struct {
 				name 	string	`json:"name"`
