@@ -135,11 +135,6 @@ type ResponseStruct struct {
 							
 										} 
 							}
-		EventPayload struct {
-
-		}
-		EventOut struct		{
-		}
 
 }
 
