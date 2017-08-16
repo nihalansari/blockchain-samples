@@ -40,7 +40,7 @@ type SimpleChaincode struct{}
 type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte, error)
 
 
-type tempAsset Struct
+type tempAsset Struct {
 
 							
 							TransactionType 	string	`json:"transactionType"`
@@ -64,7 +64,7 @@ type tempAsset Struct
 							DmaCert		struct	{ Cert string	`json:"cert"` }
 							AfDoc				string	`json:"afDoc"`
 							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
-							V5cid           string `json:"v5cID"`
+							
 										}
 
 // Structure to parse response JSON BEGIN
@@ -102,7 +102,7 @@ type ResponseStruct struct {
 							DmaCert		struct	{ Cert string	`json:"cert"` }
 							AfDoc				string	`json:"afDoc"`
 							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
-							V5cid           string `json:"v5cID"`
+							
 										} 
 							}
 		EventPayload struct {
@@ -149,7 +149,7 @@ type InRequest struct {
 		DmaCert		struct	{ Cert string	`json:"cert"` }
 		AfDoc				string	`json:"afDoc"`
 		Caller				string  `json:"caller"`		//the UI/person who fired the transaction
-		V5cid           string `json:"v5cID"`
+		
 		} 
 }
 
@@ -382,7 +382,7 @@ func init() {
 func filterQueryResponse(respFull ResponseStruct, caller string) (tempAsset, error) {
 	var resp tempAsset
 	//resp := respFull.AssetState.Asset
-	resp := respFull.AssetState.Asset
+	resp = respFull.AssetState.Asset
 	if caller == "AF" {
 					resp.MatnrAf = ""
 					resp.PoSupp = ""
