@@ -42,7 +42,7 @@ type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte
 
 
 // Structure to parse response JSON BEGIN
-/*type ResponseStruct struct {
+type ResponseStruct struct {
 
 		Assetclass struct {
 				name 	string	`json:"name"`
@@ -95,48 +95,8 @@ type ChaincodeFunc func(stub shim.ChaincodeStubInterface, args []string) ([]byte
 		}
 
 }
-*/
 
 
-type ResponseStruct struct {
-
-		Assetclass struct {
-				name 	string	`json:"name"`
-				prefix 	string	`json:"prefix"`
-				assetIDpath 	string	`json:"assetIDpath"`	
-		}
-
-		AssetKey string `json:"assetkey"`
-
-		AssetState struct {
-							Asset struct {	
-							
-							TransactionType 	string	`json:"transactionType"`
-							OwnerId				string	`json:"ownerId"`
-							AssetId				string	`json:"assetID"`		//BLOCKCHAIN KEY
-																				//NOTE: assetId changed to assetID 
-							MatnrAf				string	`json:"matnrAf"`
-							PoDma				string	`json:"poDma"`
-							PoSupp				string	`json:"poSupp"`
-							DmaDelDate			string	`json:"dmaDelDate"`
-							AfDelDate			string	`json:"afDelDate"`
-							TruckMod			string	`json:"truckMod"`
-							TruckPDate			string	`json:"truckPdate"`
-							TruckChnum			string	`json:"truckChnum"`
-							TruckEnnum			string	`json:"truckEnnum"`
-							SuppTest			string	`json:"suppTest"`
-							GrDma				string	`json:"grDma"`
-							GrAf				string	`json:"grAf"`
-							DmaMasdat			string	`json:"dmaMasdat"`
-							AfDmaTest			string	`json:"afDmaTest"`
-							DmaCert		struct	{ Cert string	`json:"cert"` }
-							AfDoc				string	`json:"afDoc"`
-							Caller				string  `json:"caller"`		//the UI/person who fired the transaction
-							
-										} 
-							}
-
-}
 
 //END
 
