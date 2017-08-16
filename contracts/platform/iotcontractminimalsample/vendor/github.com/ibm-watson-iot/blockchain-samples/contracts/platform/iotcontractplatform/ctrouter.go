@@ -87,8 +87,8 @@ type ResponseStruct struct {
 	Compliant    bool                    `json:"compliant"`          // true if the asset complies with the contract terms
 }
 
-// AssetArray is an array of assets, used by read all, recent states, history, etc.
-//type AssetArray []Asset
+// RespArray is an array of assets, used by read all, recent states, history, etc.
+type RespArray []ResponseStruct
 
 type ResponseStruct_OLD struct {
 
@@ -391,7 +391,7 @@ func Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]
 
 		return resbytes, nil
 	} else if function == "readAllAssets" {
-		var respObjArr AssetArray
+		var respObjArr RespArray
 		//now unmarshal the ARRAY of assets **NOTE**
 		err5 := json.Unmarshal([]byte(result), &respObjArr)
 		if err5 != nil {
