@@ -458,7 +458,7 @@ func filterQueryResponse(respFull ResponseStruct, caller string) (tempAsset, err
 							//resp.DmaDelCert		= ""
 							resp.AfDoc		= ""
 							resp.Caller = ""
-							resp.V5cid           	= ""
+							
 							//empty document field		
 							resp.DmaCert.Cert = ""
 							
